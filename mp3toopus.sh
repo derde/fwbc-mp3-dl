@@ -7,7 +7,7 @@ echo=
     shift
     SRC="$1"
 
-    PREACHER="Faithful Word Baptist Church"
+    PREACHER="FWBC"
     DST="${SRC/names/opus}"
     DST="${DST/.mp3/.opus}"
     DIR=$( dirname "$DST" )
@@ -23,5 +23,5 @@ echo=
 # SRC=names/b/c/xx.mp3
 # DST=opus/b/c/xx.opus
 #
-find names -type f -name \*.mp3 | sort | parallel -j $(( $( grep -c processor /proc/cpuinfo ) - 1 ))  $0 recode {}
+find names/ -type f -name \*.mp3 -size +1c | sort | parallel -j $(( $( grep -c processor /proc/cpuinfo ) - 1 ))  $0 recode {}
 
