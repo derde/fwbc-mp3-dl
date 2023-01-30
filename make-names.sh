@@ -12,8 +12,10 @@ function makenamedfile() {
             *.mp3) 
                 YMD=`ymdname "${SOURCE}"`
                 TARGET="names/${YMD/.mp3} $NAME.mp3"
-                if [ -f "$SOURCE" ] ; then
+                if [ -s "$SOURCE" ] ; then
                     [ -f "$TARGET" ] || ln "$SOURCE" "$TARGET" 
+                elif grep -q "/$NAME.mp3" BADURLS ; then
+                    echo 1>&2 "# Bad $SOURCE : $NAME" 
                 else
                     echo 1>&2 "# Missing $SOURCE : $NAME" 
                 fi
@@ -23,6 +25,10 @@ function makenamedfile() {
     done
 }
 
-mkdir -p names/20{01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19}
-grep \"prch-title\\\|mp3 page5.html | sed 's:<a href="[^"]*/::;s/"><.*//; s:<[^>]*>::g' | tr -d '\r' | tr ':?' '--' | makenamedfile
+mkdir -p names/20{01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23}
+grep \"prch-title\\\|mp3 page5.html |
+    sed 's:<a href="[^"]*/::;s/"><.*//; s:<[^>]*>::g' |
+    tr -d '\r' |
+    tr '":?\\' "'---" |
+    makenamedfile
 
