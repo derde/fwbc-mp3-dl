@@ -23,5 +23,5 @@ echo=
 # SRC=names/b/c/xx.mp3
 # DST=opus/b/c/xx.opus
 #
-find names/ -type f -name \*.mp3 -size +1c | sort | parallel -j $(( $( grep -c processor /proc/cpuinfo ) - 1 ))  $0 recode {}
+find -L names/ -type f -name \*.mp3 -size +1c | sort | parallel -j $(( $( grep -c processor /proc/cpuinfo ) - 1 ))  $0 recode {}
 

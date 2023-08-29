@@ -13,7 +13,7 @@ function makenamedfile() {
                 YMD=`ymdname "${SOURCE}"`
                 TARGET="names/${YMD/.mp3} $NAME.mp3"
                 if [ -s "$SOURCE" ] ; then
-                    [ -f "$TARGET" ] || ln "$SOURCE" "$TARGET" 
+                    [ -e "$TARGET" ] || ln -sr "$SOURCE" "$TARGET" 
                 elif grep -q "/$NAME.mp3" BADURLS ; then
                     echo 1>&2 "# Bad $SOURCE : $NAME" 
                 else
